@@ -4,7 +4,7 @@
 #
 Name     : epm
 Version  : 3.7
-Release  : 3
+Release  : 4
 URL      : https://dev-www.libreoffice.org/src/3ade8cfe7e59ca8e65052644fed9fca4-epm-3.7.tar.gz
 Source0  : https://dev-www.libreoffice.org/src/3ade8cfe7e59ca8e65052644fed9fca4-epm-3.7.tar.gz
 Summary  : No detailed summary available
