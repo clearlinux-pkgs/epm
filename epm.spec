@@ -4,7 +4,7 @@
 #
 Name     : epm
 Version  : 3.7
-Release  : 2
+Release  : 3
 URL      : https://dev-www.libreoffice.org/src/3ade8cfe7e59ca8e65052644fed9fca4-epm-3.7.tar.gz
 Source0  : https://dev-www.libreoffice.org/src/3ade8cfe7e59ca8e65052644fed9fca4-epm-3.7.tar.gz
 Summary  : No detailed summary available
@@ -14,6 +14,7 @@ Requires: epm-bin
 Requires: epm-license
 Requires: epm-man
 BuildRequires : groff
+Patch1: fix-rpm-tag.patch
 
 %description
 --------------------------------------
@@ -60,13 +61,14 @@ man components for the epm package.
 
 %prep
 %setup -q -n epm-3.7
+%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1535023853
+export SOURCE_DATE_EPOCH=1535034475
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -78,7 +80,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make TEST_VERBOSE=1 test
 
 %install
-export SOURCE_DATE_EPOCH=1535023853
+export SOURCE_DATE_EPOCH=1535034475
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/epm
 cp COPYING %{buildroot}/usr/share/doc/epm/COPYING
