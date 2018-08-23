@@ -1,0 +1,1 @@
+bindir=%{buildroot}/usr/bin mandir=%{buildroot}/usr/share/man docdir=%{buildroot}/usr/share/doc
