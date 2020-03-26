@@ -4,15 +4,15 @@
 #
 Name     : epm
 Version  : 3.7
-Release  : 5
+Release  : 6
 URL      : https://dev-www.libreoffice.org/src/3ade8cfe7e59ca8e65052644fed9fca4-epm-3.7.tar.gz
 Source0  : https://dev-www.libreoffice.org/src/3ade8cfe7e59ca8e65052644fed9fca4-epm-3.7.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0
-Requires: epm-bin
-Requires: epm-license
-Requires: epm-man
+Requires: epm-bin = %{version}-%{release}
+Requires: epm-license = %{version}-%{release}
+Requires: epm-man = %{version}-%{release}
 BuildRequires : groff
 Patch1: fix-rpm-tag.patch
 
@@ -27,8 +27,7 @@ including:
 %package bin
 Summary: bin components for the epm package.
 Group: Binaries
-Requires: epm-license
-Requires: epm-man
+Requires: epm-license = %{version}-%{release}
 
 %description bin
 bin components for the epm package.
@@ -37,7 +36,7 @@ bin components for the epm package.
 %package doc
 Summary: doc components for the epm package.
 Group: Documentation
-Requires: epm-man
+Requires: epm-man = %{version}-%{release}
 
 %description doc
 doc components for the epm package.
@@ -61,29 +60,38 @@ man components for the epm package.
 
 %prep
 %setup -q -n epm-3.7
+cd %{_builddir}/epm-3.7
 %patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1535034475
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1585185807
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %configure --disable-static
 make  %{?_smp_mflags}
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make TEST_VERBOSE=1 test
 
 %install
-export SOURCE_DATE_EPOCH=1535034475
+export SOURCE_DATE_EPOCH=1585185807
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/epm
-cp COPYING %{buildroot}/usr/share/doc/epm/COPYING
+mkdir -p %{buildroot}/usr/share/package-licenses/epm
+cp %{_builddir}/epm-3.7/COPYING %{buildroot}/usr/share/package-licenses/epm/74a8a6531a42e124df07ab5599aad63870fa0bd4
 %make_install bindir=%{buildroot}/usr/bin mandir=%{buildroot}/usr/share/man docdir=%{buildroot}/usr/share/doc
 
 %files
@@ -103,11 +111,11 @@ cp COPYING %{buildroot}/usr/share/doc/epm/COPYING
 /usr/share/doc/epm-manual.pdf
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/epm/COPYING
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/epm/74a8a6531a42e124df07ab5599aad63870fa0bd4
 
 %files man
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 /usr/share/man/cat1/epm.1
 /usr/share/man/cat1/epminstall.1
 /usr/share/man/cat1/mkepmlist.1
