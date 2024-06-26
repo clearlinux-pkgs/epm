@@ -1,0 +1,42 @@
+From e11d0f3664f7c5ed094d56a6f2499525d9036dc2 Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Wed, 26 Jun 2024 15:05:18 -0700
+Subject: [PATCH] Workaround broken install detection
+
+---
+ doc/Makefile.in | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/doc/Makefile.in b/doc/Makefile.in
+index 228d59a..8ade943 100644
+--- a/doc/Makefile.in
++++ b/doc/Makefile.in
+@@ -83,19 +83,19 @@ clean:
+ # Install documentation
+ install:
+ 	echo Installing EPM manpages in $(BUILDROOT)$(mandir)/man1
+-	$(INSTALL) -d -m 755 $(BUILDROOT)$(mandir)/man1
++	install -d -m 755 $(BUILDROOT)$(mandir)/man1
+ 	for file in epm.1 epminstall.1 mkepmlist. setup.1; do \
+-		$(INSTALL) -c -m 644 $$file $(BUILDROOT)$(mandir)/man1; \
++		install -c -m 644 $$file $(BUILDROOT)$(mandir)/man1; \
+ 	done
+ 	echo Installing EPM manpages in $(BUILDROOT)$(mandir)/man5
+-	$(INSTALL) -d -m 755 $(BUILDROOT)$(mandir)/man5
++	install -d -m 755 $(BUILDROOT)$(mandir)/man5
+ 	for file in epm.list.5 setup.types.5; do \
+-		$(INSTALL) -c -m 644 $$file $(BUILDROOT)$(mandir)/man5; \
++		install -c -m 644 $$file $(BUILDROOT)$(mandir)/man5; \
+ 	done
+ 	echo Installing EPM documentation in $(BUILDROOT)$(docdir)
+-	$(INSTALL) -d -m 755 $(BUILDROOT)$(docdir)
++	install -d -m 755 $(BUILDROOT)$(docdir)
+ 	for file in $(srcdir)/COPYING $(srcdir)/README.md $(BOOKS); do \
+-		$(INSTALL) -c -m 644 $$file $(BUILDROOT)$(docdir); \
++		install -c -m 644 $$file $(BUILDROOT)$(docdir); \
+ 	done
+ 
+ 
+-- 
+2.45.1
+

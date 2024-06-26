@@ -1,1 +1,1 @@
-bindir=%{buildroot}/usr/bin mandir=%{buildroot}/usr/share/man docdir=%{buildroot}/usr/share/doc
+bindir=/usr/bin mandir=/usr/share/man docdir=/usr/share/doc
